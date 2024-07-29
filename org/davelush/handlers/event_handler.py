@@ -17,19 +17,20 @@ def event_handler(event_type, slack_event, py_bot: Bot):
             message_text = event.get("message").get("text")
             logging.info("retrieved message_text from event -> message -> text")
         elif event.get("subtype") == "message_deleted":
-            logging.info("ignoring a deleted message")
+            return make_response("ignoring a deleted message", 200, {"X-Slack-No-Retry": 1})
         else:
             logging.info("retrieved message_text from event -> text")
         channel_id = slack_event.get("event").get("channel")
-        event_ts = slack_event.get("event").get("ts")
-        event_id = slack_event.get("event_id")
-        client_msg_id = slack_event.get("event").get("client_msg_id")
-        sending_user = f"<@{slack_event.get('event').get('user')}>"
+        sending_user = slack_event.get('event').get('user')
+        # event_ts = slack_event.get("event").get("ts")
+        # event_id = slack_event.get("event_id")
+        # client_msg_id = slack_event.get("event").get("client_msg_id")
 
-        if message_text is not None:
+        #TODO the user id is a bit of a dirty hack here
+        if message_text is not None and sending_user != "U07E23LT4BY":
             logging.info(message_text)
-            # TODO this will keep just spamming in a loop
-            py_bot.client.chat_postMessage(channel=channel_id, text=f"<Here is a response @{sending_user}>")
+            py_bot.client.chat_postMessage(channel=channel_id, text=f"This is a simple echo response <@{sending_user}>\n\n"
+                                                                    f"You said `{message_text}`")
 
         # synchronous acknowledgement response
         message = "Sent response message"
