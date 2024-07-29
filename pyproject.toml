@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "slackbot-primer"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+license = "Apache-2.0 license"
+readme = "README.md"
+#packages = [{include = "*", from="org"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+flask = "3.0.3"
+flask_cors = "4.0.1"
+flask_restful = "0.3.10"
+bjoern = "3.2.2"
+python-json-logger = "2.0.7"
+slack-sdk="3.31.0"
+certifi="2024.7.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
